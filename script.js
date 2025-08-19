@@ -151,6 +151,9 @@ function checkResult() {
         updateGameStatusMessage(`${winner} Wins! 🎉`);
         highlightWinningCells(winningCells);
         gameActive = false;
+
+        // Tambahin ini biar confetti muncul
+        startConfetti();
         
         // Save to localStorage
         saveGameResult('win', currentPlayer);
@@ -459,3 +462,74 @@ window.addEventListener('DOMContentLoaded', () => {
     updateLeaderboard();
     selectMode('pvp'); // Set default mode
 });
+
+/* ============================= */
+/* 🎉 Confetti Effect            */
+/* ============================= */
+
+// Buat canvas confetti
+const confettiCanvas = document.getElementById('confettiCanvas');
+const ctx = confettiCanvas.getContext('2d');
+
+let confettiPieces = [];
+let animationFrameId;
+
+function resizeCanvas() {
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// Buat potongan confetti random
+function createConfetti() {
+    const colors = ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#fbb1bd', '#ffbe0b', '#fb5607', '#8338ec', '#3a86ff', '#06d6a0'];
+    for (let i = 0; i < 150; i++) {
+        confettiPieces.push({
+            x: Math.random() * confettiCanvas.width,
+            y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+            size: Math.random() * 6 + 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            speed: Math.random() * 3 + 2,
+            angle: Math.random() * 360
+        });
+    }
+}
+
+// Animasi confetti
+function drawConfetti() {
+    ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+    confettiPieces.forEach(p => {
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x, p.y, p.size, p.size);
+
+        p.y += p.speed;
+        p.x += Math.sin(p.angle) * 2;
+
+        if (p.y > confettiCanvas.height) {
+            p.y = -10;
+            p.x = Math.random() * confettiCanvas.width;
+        }
+    });
+
+    animationFrameId = requestAnimationFrame(drawConfetti);
+}
+
+// Mulai confetti
+function startConfetti() {
+    confettiPieces = [];
+    createConfetti();
+    cancelAnimationFrame(animationFrameId);
+    drawConfetti();
+
+    // stop setelah 5 detik
+    setTimeout(() => {
+        cancelAnimationFrame(animationFrameId);
+        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    }, 5000);
+}
+
+/* ============================= */
+/* 🔗 Integrasi ke Game Winner   */
+/* ============================= */
