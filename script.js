@@ -7,6 +7,91 @@ let player1Name = '';
 let player2Name = '';
 let isBot = false;
 
+// Sound Effects
+const sounds = {
+    click: new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+X0xm4sASl+zPLVfzEGHm7A7+CVSR0PXrXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASO='),
+    win: new Audio('data:audio/wav;base64,UklGRvQDAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdADAAC4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAuLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBA'),
+    draw: new Audio('data:audio/wav;base64,UklGRvQDAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdADAAC4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAuLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBA'),
+    gameStart: new Audio('data:audio/wav;base64,UklGRvQDAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdADAAC4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAuLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBA')
+};
+
+// Function to play sound with error handling
+function playSound(soundName) {
+    try {
+        if (sounds[soundName]) {
+            sounds[soundName].currentTime = 0;
+            sounds[soundName].play().catch(e => {
+                console.log('Sound play failed:', e);
+            });
+        }
+    } catch (error) {
+        console.log('Sound error:', error);
+    }
+}
+
+// Create better sound effects using Web Audio API
+function createBeepSound(frequency, duration, type = 'sine') {
+    try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = frequency;
+        oscillator.type = type;
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + duration);
+        
+        return true;
+    } catch (error) {
+        console.log('Web Audio API not supported:', error);
+        return false;
+    }
+}
+
+// Enhanced sound functions
+function playClickSound() {
+    if (!createBeepSound(800, 0.1)) {
+        playSound('click');
+    }
+}
+
+function playWinSound() {
+    // Play a triumphant melody
+    if (createBeepSound(523, 0.2)) { // C5
+        setTimeout(() => createBeepSound(659, 0.2), 200); // E5
+        setTimeout(() => createBeepSound(784, 0.2), 400); // G5
+        setTimeout(() => createBeepSound(1047, 0.4), 600); // C6
+    } else {
+        playSound('win');
+    }
+}
+
+function playDrawSound() {
+    // Play a neutral sound sequence
+    if (createBeepSound(400, 0.3)) {
+        setTimeout(() => createBeepSound(350, 0.3), 300);
+    } else {
+        playSound('draw');
+    }
+}
+
+function playGameStartSound() {
+    // Play an ascending melody
+    if (createBeepSound(262, 0.15)) { // C4
+        setTimeout(() => createBeepSound(330, 0.15), 150); // E4
+        setTimeout(() => createBeepSound(392, 0.15), 300); // G4
+    } else {
+        playSound('gameStart');
+    }
+}
+
 // Winning Conditions
 const winningConditions = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
@@ -31,6 +116,9 @@ function selectMode(mode) {
         document.getElementById('player2Name').placeholder = 'Bot Name (optional)';
         gameModeIndicator.innerHTML = '<i class="fas fa-robot"></i> Player vs Bot';
     }
+    
+    // Play click sound when selecting mode
+    playClickSound();
 }
 
 // Start Game Function
@@ -63,6 +151,9 @@ function startGame() {
     document.getElementById('nameInputSection').classList.add('hidden');
     document.getElementById('gameSection').classList.remove('hidden');
 
+    // Play game start sound
+    playGameStartSound();
+
     initializeGame();
     updateLeaderboard();
 }
@@ -80,6 +171,9 @@ function newGame() {
     // Reset player cards
     document.getElementById('player1Card').classList.remove('active');
     document.getElementById('player2Card').classList.remove('active');
+    
+    // Play click sound
+    playClickSound();
 }
 
 // Initialize Game Board
@@ -113,6 +207,8 @@ function handleCellClick(e) {
         return;
     }
 
+    // Play click sound when making a move
+    playClickSound();
     makeMove(clickedCellIndex, clickedCell);
 }
 
@@ -152,7 +248,8 @@ function checkResult() {
         highlightWinningCells(winningCells);
         gameActive = false;
 
-        // Tambahin ini biar confetti muncul
+        // Play win sound and start confetti
+        playWinSound();
         startConfetti();
         
         // Save to localStorage
@@ -165,6 +262,9 @@ function checkResult() {
     if (!gameBoard.includes('')) {
         updateGameStatusMessage("It's a Draw! 🤝");
         gameActive = false;
+        
+        // Play draw sound
+        playDrawSound();
         
         // Save to localStorage
         saveGameResult('draw');
@@ -179,7 +279,10 @@ function checkResult() {
 
     // Bot turn
     if (isBot && currentPlayer === 'O' && gameActive) {
-        setTimeout(botMove, 800);
+        setTimeout(() => {
+            playClickSound(); // Bot move sound
+            botMove();
+        }, 800);
     }
 }
 
@@ -290,6 +393,8 @@ function highlightWinningCells(cells) {
 
 // Reset Game
 function resetGame() {
+    // Play click sound when resetting
+    playClickSound();
     initializeGame();
 }
 
@@ -336,6 +441,9 @@ function switchTab(tabName) {
         tabButtons[1].classList.add('active');
         document.getElementById('pvbStatsSection').classList.add('active');
     }
+    
+    // Play click sound when switching tabs
+    playClickSound();
 }
 
 // Update Leaderboard
@@ -454,6 +562,9 @@ function clearAllStats() {
         localStorage.removeItem('pvbStats');
         updateLeaderboard();
         alert('All statistics have been cleared!');
+        
+        // Play click sound
+        playClickSound();
     }
 }
 
