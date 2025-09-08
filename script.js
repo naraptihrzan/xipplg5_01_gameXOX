@@ -123,6 +123,11 @@ function selectMode(mode) {
 
 // Start Game Function
 function startGame() {
+     const bgMusic = document.getElementById("bg-music");
+    if (bgMusic) {
+        bgMusic.pause(); // stop musik saat game mulai
+    }
+    
     const p1Name = document.getElementById('player1Name').value.trim();
     const p2Name = document.getElementById('player2Name').value.trim();
 
@@ -640,6 +645,22 @@ function startConfetti() {
         ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
     }, 5000);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const bgMusic = document.getElementById("bg-music");
+    if (bgMusic) {
+        bgMusic.volume = 0.5;
+        bgMusic.play().catch(() => {
+            console.log("Autoplay diblokir, tunggu klik user...");
+        });
+
+        
+    }
+});
+
+
+
+
 
 /* ============================= */
 /* 🔗 Integrasi ke Game Winner   */
