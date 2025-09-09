@@ -9,7 +9,7 @@ let isBot = false;
 
 // Sound Effects
 const sounds = {
-    click: new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+X0xm4sASl+zPLVfzEGHm7A7+CVSR0PXrXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASO='),
+    click: new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+X0xm4sASl+zPLVfzEGHm7A7+CVSR0PXrXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASOAz/LWfzEGHm/D7+CVSR0PXbXo5KNIDAhJsuv4v2wqASO='),
     win: new Audio('data:audio/wav;base64,UklGRvQDAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdADAAC4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAuLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBA'),
     draw: new Audio('data:audio/wav;base64,UklGRvQDAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdADAAC4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAuLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBA'),
     gameStart: new Audio('data:audio/wav;base64,UklGRvQDAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YdADAAC4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAuLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4QEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBA')
@@ -123,19 +123,31 @@ function selectMode(mode) {
 
 // Start Game Function
 function startGame() {
-     const bgMusic = document.getElementById("bg-music");
-    if (bgMusic) {
-        bgMusic.pause(); // stop musik saat game mulai
-    }
-    
     const p1Name = document.getElementById('player1Name').value.trim();
     const p2Name = document.getElementById('player2Name').value.trim();
 
     if (!p1Name) {
         alert('Please enter Player 1 name!');
+        // Pastikan musik tidak diputar jika nama belum diisi
         return;
     }
 
+    const bgMusic = document.getElementById("bgMusic");
+    if (bgMusic) {
+        bgMusic.pause(); // stop musik saat game mulai
+        // Coba play musik, jika gagal karena autoplay diblokir, play saat klik tombol Start Game
+        bgMusic.muted = false;
+        bgMusic.play().catch(() => {
+            console.log("Autoplay diblokir, tunggu klik tombol Start Game...");
+            // Play saat klik tombol Start Game saja
+            const resumeMusic = () => {
+                bgMusic.play();
+                document.querySelector('.start-btn').removeEventListener('click', resumeMusic);
+            };
+            document.querySelector('.start-btn').addEventListener('click', resumeMusic);
+        });
+    }
+    
     player1Name = p1Name;
     player2Name = gameMode === 'pvb' ? (p2Name || 'Bot') : (p2Name || 'Player 2');
     isBot = gameMode === 'pvb';
@@ -165,6 +177,12 @@ function startGame() {
 
 // New Game Function
 function newGame() {
+    // Stop music saat new game
+    const bgMusic = document.getElementById("bgMusic");
+    if (bgMusic) {
+        bgMusic.pause();
+    }
+    
     document.getElementById('nameInputSection').classList.remove('hidden');
     document.getElementById('gameSection').classList.add('hidden');
     
@@ -646,21 +664,18 @@ function startConfetti() {
     }, 5000);
 }
 
+// Inisialisasi musik latar belakang dengan id 'bgMusic'
 document.addEventListener("DOMContentLoaded", () => {
-    const bgMusic = document.getElementById("bg-music");
+    const bgMusic = document.getElementById("bgMusic");
     if (bgMusic) {
         bgMusic.volume = 0.5;
+        bgMusic.muted = false;
+        // Coba play musik, jika gagal karena autoplay diblokir, jangan play di klik sembarang
         bgMusic.play().catch(() => {
-            console.log("Autoplay diblokir, tunggu klik user...");
+            console.log("Autoplay diblokir, tunggu klik tombol Start Game...");
         });
-
-        
     }
 });
-
-
-
-
 
 /* ============================= */
 /* 🔗 Integrasi ke Game Winner   */

@@ -452,6 +452,7 @@ body {
 }
 
 .stats-section {
+    height: 100%;
     display: none;
 }
 
@@ -469,7 +470,7 @@ body {
 }
 
 .stats-list {
-    max-height: 300px;
+    max-height: 700px;
     overflow-y: auto;
 }
 
