@@ -610,6 +610,7 @@ body {
     .game-container, .leaderboard {
         padding: 20px;
     }
+
     
     .mode-buttons {
         flex-direction: column;
